@@ -5,18 +5,18 @@ public class TermProject extends JFrame {
 	public TermProject() {
 		setTitle("Java IDE");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setSize(1000, 500);
-		setVisible(true);
-	}
-	public void Buttons() {
 		Container contentPane = getContentPane();
 		contentPane.setBackground(Color.WHITE);
-		contentPane.setLayout(new FlowLayout());
+		contentPane.setLayout(new GridLayout(3,2));
+		
 		
 		contentPane.add(new JButton("Java File Upload"));
 		contentPane.add(new JButton("Compile"));
 		contentPane.add(new JButton("Run Program"));
-		setSize(100, 100);
+		contentPane.add(new JButton("Compile Error List"));
+		contentPane.add(new JButton("Reset"));
+		contentPane.add(new JButton("Exit"));
+		setSize(1000, 500);
 		setVisible(true);
 	}
 	
