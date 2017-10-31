@@ -45,11 +45,27 @@ public class TermProject extends JFrame {
 class MyActionListener implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		JButton b = (JButton)e.getSource();
+		
+		
+		
+		
 		if(b.getText().equals("Java File Upload")) {
 			b.setText("액션 리스너 성공");
 		}
 		else if(b.getText().equals("Compile")) {
 			b.setText("액션 리스너 또한 성공");
+		}
+		else if(b.getText().equals("Run")) {
+			b.setText("Run 성공함");
+		}
+		else if(b.getText().equals("Reset")) {
+			b.setText("초기화 되었음");
+		}
+		else if(b.getText().equals("Compile Error List")){
+			b.setText("CEL이 TextArea에 출력됨");
+		}
+		else if(b.getText().equals("Exit")) {
+			System.exit(-1);
 		}
 	}
 }
