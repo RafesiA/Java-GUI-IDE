@@ -3,8 +3,9 @@ import java.awt.*;
 import java.awt.event.*;
 
 
-public class TermProject1 extends JFrame {
-	
+public class TermProject extends JFrame {
+	String FileName;
+	JTextField jt;
 	JButton btn1 = new JButton("Java File Upload");
 	JButton btn2 = new JButton("Compile");
 	JButton btn3 = new JButton("Run Program");
@@ -12,13 +13,15 @@ public class TermProject1 extends JFrame {
 	JButton btn5 = new JButton("Reset");
 	JButton btn6 = new JButton("Exit");
 	
-	public TermProject1() {
+	public TermProject() {
 		setTitle("Java IDE");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		Container contentPane = getContentPane();
 		contentPane.setBackground(Color.WHITE);
-		contentPane.setLayout(new GridLayout(3, 2, 600, 0));
+		contentPane.setLayout(new GridLayout(7, 1, 0, 0));
 		MyActionListener al = new MyActionListener();
+		jt = new JTextField();
+		contentPane.add(jt);
 		contentPane.add(btn1);
 		btn1.addActionListener(al);
 		contentPane.add(btn2);
@@ -33,8 +36,7 @@ public class TermProject1 extends JFrame {
 		btn6.addActionListener(al);
 		
 		
-		
-		setSize(1000, 500);
+		setSize(500, 250);
 		setVisible(true);
 	}
 	class MyActionListener implements ActionListener{
@@ -42,8 +44,10 @@ public class TermProject1 extends JFrame {
 		
 		public void actionPerformed(ActionEvent e) {
 			JButton b = (JButton)e.getSource();
-			if(b.getText().equals("Java File Upload"))
-				;
+			if(b.getText().equals("Java File Upload")){
+				FileName = jt.getText();
+				System.out.println(jt.getText());
+			}
 				//void UploadJ();
 			else if(b.getText().equals("Comile"))
 				;
@@ -65,7 +69,7 @@ public class TermProject1 extends JFrame {
 	}
 	
 	public static void main(String[] args) {
-		new TermProject1();
+		new TermProject();
 	}
 
 }
