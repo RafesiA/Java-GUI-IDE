@@ -66,6 +66,9 @@ public class TermProject extends JFrame {
 				(oProcess.getErrorStream()));
 					while ((s = stdError.readLine()) != null) {
 						FileWriter fw = new FileWriter(E_file, true);
+						fw.write(s);
+						fw.flush();
+						fw.close();
 					}
 					
 					ja.append(FileName + " 파일이 정상적으로 컴파일 되었습니다.");
