@@ -59,6 +59,7 @@ public class TermProject extends JFrame {
 				}
 				//void UploadJ();
 			else if(b.getText().equals("Compile")) {
+				ja.append("Compiling..");
 				String s = null;
 				try {
 					Process oProcess = new ProcessBuilder("javac", FileName).start();
@@ -80,6 +81,17 @@ public class TermProject extends JFrame {
 			}
 			
 			else if(b.getText().equals("Run")) {
+				File file = new File(FileName);
+				String fname = file.getName();
+				int pos = fname.lastIndexOf(".");
+				if(pos > 0) {
+					fname = fname.substring(0, pos);
+				}
+				try {
+					Process rProcess = new ProcessBuilder("cmd", "java", fname).start();
+				} catch(IOException e2) {
+					ja.append("치명적 에러");
+				}
 				
 			}
 			    //void Run();
