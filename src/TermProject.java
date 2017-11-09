@@ -1,10 +1,14 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.*;
+import java.util.*;
+
 
 
 public class TermProject extends JFrame {
 	String FileName;
+	File E_file = new File("C:\\Error_File.txt");
 	
 	JButton btn1 = new JButton("Java File Upload");
 	JButton btn2 = new JButton("Compile");
@@ -12,7 +16,8 @@ public class TermProject extends JFrame {
 	JButton btn4 = new JButton("Compile Error List");
 	JButton btn5 = new JButton("Reset");
 	JButton btn6 = new JButton("Exit");
-	JTextField jt = new JTextField();
+	JTextField jt = new JTextField("", 20);
+	JTextArea ja = new JTextArea("여기서 출력됨" + "\n", 7, 20);
 	
 	
 	
@@ -22,10 +27,11 @@ public class TermProject extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		Container contentPane = getContentPane();
 		contentPane.setBackground(Color.WHITE);
-		contentPane.setLayout(new GridLayout(8, 1, 0, 0));
+		contentPane.setLayout(new GridLayout(12,1,0,0));
 		MyActionListener al = new MyActionListener();
 		contentPane.add(new JLabel("파일 경로를 입력하고 버튼을 클릭하세요."));
 		contentPane.add(jt);
+		contentPane.add(new JScrollPane(ja));
 		contentPane.add(btn1);
 		btn1.addActionListener(al);
 		contentPane.add(btn2);
@@ -40,30 +46,47 @@ public class TermProject extends JFrame {
 		btn6.addActionListener(al);
 		
 	
-		setSize(500	, 250);
+		setSize(800, 600);
 		setVisible(true);
 	}
 	class MyActionListener implements ActionListener{
-
 		
 		public void actionPerformed(ActionEvent e) {
 			JButton b = (JButton)e.getSource();
 			if(b.getText().equals("Java File Upload")) {
 				FileName = jt.getText();
-			    System.out.println(FileName);
+			    ja.append(FileName + "\n");
 				}
 				//void UploadJ();
-			else if(b.getText().equals("Comile"))
-				;
+			else if(b.getText().equals("Compile")) {
+				String s = null;
+				try {
+					Process oProcess = new ProcessBuilder("javac", FileName).start();
+					BufferedReader stdError = new BufferedReader(new InputStreamReader
+				(oProcess.getErrorStream()));
+					while ((s = stdError.readLine()) != null) {
+						FileWriter fw = new FileWriter(E_file, true);
+					}
+					
+					ja.append(FileName + " 파일이 정상적으로 컴파일 되었습니다.");
+					
+				} catch(IOException e1) {
+					System.out.println(e1);
+				}
 				//void Compile();
-			else if(b.getText().equals("Run"))
-				;
+			}
+			
+			else if(b.getText().equals("Run")) {
+				
+			}
 			    //void Run();
-			else if(b.getText().equals("Compile Error List"))
-				;
+			else if(b.getText().equals("Compile Error List")) {
+				
+			}
 			    //void Compile_E();
-			else if(b.getText().equals("Reset"))
-				;
+			else if(b.getText().equals("Reset")) {
+				
+			}
 			    //void Reset();
 			else if(b.getText().equals("Exit"))
 				System.exit(0);
