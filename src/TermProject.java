@@ -32,6 +32,7 @@ public class TermProject extends JFrame {
 		contentPane.add(new JLabel("파일 경로를 입력하고 버튼을 클릭하세요."));
 		contentPane.add(jt);
 		contentPane.add(new JScrollPane(ja));
+		ja.setEditable(false);
 		contentPane.add(btn1);
 		btn1.addActionListener(al);
 		contentPane.add(btn2);
@@ -59,7 +60,7 @@ public class TermProject extends JFrame {
 				}
 				//void UploadJ();
 			else if(b.getText().equals("Compile")) {
-				ja.append("Compiling..");
+				ja.append("Compiled");
 				String s = null;
 				try {
 					Process oProcess = new ProcessBuilder("javac", FileName).start();
@@ -88,7 +89,9 @@ public class TermProject extends JFrame {
 					fname = fname.substring(0, pos);
 				}
 				try {
-					Process rProcess = new ProcessBuilder("cmd", "java", fname).start();
+					Process rProcess = new ProcessBuilder("cmd.exe", "/C java", fname, "start").start();
+					System.out.println("cmd 실행됨");
+					
 				} catch(IOException e2) {
 					ja.append("치명적 에러");
 				}
@@ -100,6 +103,7 @@ public class TermProject extends JFrame {
 			}
 			    //void Compile_E();
 			else if(b.getText().equals("Reset")) {
+				E_file.delete();
 				
 			}
 			    //void Reset();
