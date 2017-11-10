@@ -21,8 +21,32 @@ public class TermProject extends JFrame {
 	JTextArea ja = new JTextArea("Editor" + "\n");//Editor
 	JTextArea er = new JTextArea("Error Message" + "\n");//Error 내용 출력
 	JLabel txt = new JLabel("파일 경로를 입력하고 버튼을 클릭하세요.");
+	
+	class EPanel extends JPanel{
+		EPanel(){
+			setVisible(true);
+			setSize(1000,500);
+			setLayout(new BorderLayout());
+			ja.setSize(900, 450);
+			add(ja,BorderLayout.CENTER);
+			add(new JScrollPane(ja));
+		}
+	}
+	
+	class RPanel extends JPanel{
+		RPanel(){
+			setVisible(true);
+			setSize(1000,200);
+			setLayout(new BorderLayout());
+			er.setSize(900, 150);
+			add(er,BorderLayout.CENTER);
+			add(new JScrollPane(er));
+		}
+	}
 
 	public TermProject() {
+		EPanel e = new EPanel();
+		RPanel r = new RPanel();
 		setResizable(false);
 		setTitle("Java IDE");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -52,9 +76,9 @@ public class TermProject extends JFrame {
 		btn2.setLocation(800,150);
 		contentPane.add(btn2);
 		
-		ja.setSize(900, 450);
-		ja.setLocation(50, 275);
-		contentPane.add(ja);
+		
+		e.setLocation(0, 250);
+		contentPane.add(e);
 		
 		
 		btn3.setSize(250, 100);
@@ -73,9 +97,9 @@ public class TermProject extends JFrame {
 		btn6.setLocation(750,750);
 		contentPane.add(btn6);
 		
-		er.setSize(900, 150);
-		er.setLocation(50,860);
-		contentPane.add(er);
+		
+		r.setLocation(0,850);
+		contentPane.add(r);
 		
 	
 		ja.setEditable(false);
