@@ -16,38 +16,86 @@ public class TermProject extends JFrame {
 	JButton btn4 = new JButton("Compile Error List");
 	JButton btn5 = new JButton("Reset");
 	JButton btn6 = new JButton("Exit");
-	JTextField jt = new JTextField("", 20);
-	JTextArea ja = new JTextArea("여기서 출력됨" + "\n", 7, 20);
-	
-	
-	
-	
+	JTextField jt = new JTextField("File Directory", 20);
+	JTextField st = new JTextField("Status", 20);//Status 출력
+	JTextArea ja = new JTextArea("Editor" + "\n");//Editor
+	JTextArea er = new JTextArea("Error Message" + "\n");//Error 내용 출력
+	JLabel txt = new JLabel("파일 경로를 입력하고 버튼을 클릭하세요.");
+
 	public TermProject() {
+		setResizable(false);
 		setTitle("Java IDE");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		Container contentPane = getContentPane();
-		contentPane.setBackground(Color.WHITE);
-		contentPane.setLayout(new GridLayout(12,1,0,0));
+		contentPane.setBackground(Color.gray);
 		MyActionListener al = new MyActionListener();
-		contentPane.add(new JLabel("파일 경로를 입력하고 버튼을 클릭하세요."));
+		setLayout(null);
+		
+		txt.setSize(1000, 50);
+		txt.setLocation(380, 0);
+		contentPane.add(txt);
+		
+		jt.setSize(800, 100);
+		jt.setLocation(0, 50);
 		contentPane.add(jt);
-		contentPane.add(new JScrollPane(ja));
-		ja.setEditable(false);
+		
+		btn1.setSize(200, 100);
+		btn1.setLocation(800, 50);
 		contentPane.add(btn1);
-		btn1.addActionListener(al);
+		
+		
+		st.setSize(800, 100);
+		st.setLocation(0, 150);
+		contentPane.add(st);
+		
+		btn2.setSize(200, 100);
+		btn2.setLocation(800,150);
 		contentPane.add(btn2);
-		btn2.addActionListener(al);
+		
+		ja.setSize(900, 450);
+		ja.setLocation(50, 275);
+		contentPane.add(ja);
+		
+		
+		btn3.setSize(250, 100);
+		btn3.setLocation(0,750);
 		contentPane.add(btn3);
-		btn3.addActionListener(al);
+		
+		btn4.setSize(250, 100);
+		btn4.setLocation(250,750);
 		contentPane.add(btn4);
-		btn4.addActionListener(al);
+		
+		btn5.setSize(250, 100);
+		btn5.setLocation(500,750);
 		contentPane.add(btn5);
-		btn5.addActionListener(al);
+		
+		btn6.setSize(250, 100);
+		btn6.setLocation(750,750);
 		contentPane.add(btn6);
+		
+		er.setSize(900, 150);
+		er.setLocation(50,860);
+		contentPane.add(er);
+		
+	
+		ja.setEditable(false);
+		er.setEditable(false);
+		
+		btn1.addActionListener(al);
+		
+		
+		btn2.addActionListener(al);
+		
+		btn3.addActionListener(al);
+		
+		btn4.addActionListener(al);
+		
+		btn5.addActionListener(al);
+		
 		btn6.addActionListener(al);
 		
 	
-		setSize(800, 600);
+		setSize(1000,1050);
 		setVisible(true);
 	}
 	class MyActionListener implements ActionListener{
@@ -60,7 +108,7 @@ public class TermProject extends JFrame {
 				}
 				//void UploadJ();
 			else if(b.getText().equals("Compile")) {
-				ja.append("Compiled");
+				ja.append("Compiled" + "\n");
 				String s = null;
 				try {
 					Process oProcess = new ProcessBuilder("javac", FileName).start();
