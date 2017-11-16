@@ -11,6 +11,7 @@ import java.util.Arrays;
 public class TermProject extends JFrame {
 	String FileName;
 	File E_file = new File("C:\\Error_File.txt");
+	File javaFile;
 	
 	JButton btn1 = new JButton("Java File Upload");
 	JButton btn2 = new JButton("Compile");
@@ -127,12 +128,19 @@ public class TermProject extends JFrame {
 		setVisible(true);
 	}
 	class MyActionListener implements ActionListener{
-		
 		public void actionPerformed(ActionEvent e) {
 			JButton b = (JButton)e.getSource();
 			if(b.getText().equals("Java File Upload")) {
-				FileName = jt.getText();
-			    st.append(FileName + "\n");
+				int i =0;
+				try {
+					FileReader fr = null;
+					FileName = jt.getText();
+					st.append(FileName + "\n");
+					fr = new FileReader(FileName);
+						
+					} catch(IOException er){
+						System.out.println(er);
+					}
 				}
 				//void UploadJ();
 			else if(b.getText().equals("Compile")) {
@@ -161,16 +169,18 @@ public class TermProject extends JFrame {
 			else if(b.getText().equals("Run Program")) {
 				File file = new File(FileName);
 				String fname = file.getName();
+				String path = file.getParent();
 				int pos = fname.lastIndexOf(".");
 				if(pos > 0) {
 					fname = fname.substring(0, pos);
 				}
-				List<String> cmds = Arrays.asList("cmd.exe", "/c java", fname);
+				List<String> cmds = Arrays.asList("cmd.exe", "/c java", path + " "+ fname);
 				try {
 					Process rProcess = new ProcessBuilder(cmds).start();
 					BufferedReader stdOut = new BufferedReader(new InputStreamReader(rProcess.getInputStream()));
 					BufferedReader stdError = new BufferedReader(new InputStreamReader(rProcess.getErrorStream()));
 					st.append(FileName + " 가 실행중");
+					System.out.println("cmd.exe" + "/c java " + path +" "+ fname);
 					
 				} catch(IOException e2) {
 					st.append("치명적 에러");
