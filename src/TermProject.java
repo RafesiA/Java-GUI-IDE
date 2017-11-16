@@ -8,7 +8,7 @@ import java.util.Arrays;
 
 
 
-public class TermProject1 extends JFrame {
+public class TermProject extends JFrame {
 	String FileName;
 	File E_file = new File("C:\\Error_File.txt");
 	File javaFile;
@@ -57,7 +57,7 @@ public class TermProject1 extends JFrame {
 		}
 	}
 
-	public TermProject1() {
+	public TermProject() {
 		SPanel s = new SPanel();
 		EPanel e = new EPanel();
 		RPanel r = new RPanel();
@@ -216,7 +216,7 @@ public class TermProject1 extends JFrame {
 	}
 	
 	public static void main(String[] args) {
-		new TermProject1();
+		new TermProject();
 	}
 
 }
