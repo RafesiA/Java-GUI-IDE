@@ -8,7 +8,7 @@ import java.util.Arrays;
 
 
 
-public class TermProject extends JFrame {
+public class TermProject1 extends JFrame {
 	String FileName;
 	File E_file = new File("C:\\Error_File.txt");
 	File javaFile;
@@ -25,6 +25,16 @@ public class TermProject extends JFrame {
 	JTextArea er = new JTextArea("Error Message" + "\n");//Error 내용 출력
 	JLabel txt = new JLabel("파일 경로를 입력하고 버튼을 클릭하세요.");
 	
+	class SPanel extends JPanel{
+		SPanel(){
+			setVisible(true);
+			setSize(800,100);
+			setLayout(new BorderLayout());
+			st.setSize(800,100);
+			add(st,BorderLayout.CENTER);
+			add(new JScrollPane(st));
+		}
+	}
 	class EPanel extends JPanel{
 		EPanel(){
 			setVisible(true);
@@ -47,7 +57,8 @@ public class TermProject extends JFrame {
 		}
 	}
 
-	public TermProject() {
+	public TermProject1() {
+		SPanel s = new SPanel();
 		EPanel e = new EPanel();
 		RPanel r = new RPanel();
 		setResizable(false);
@@ -71,10 +82,8 @@ public class TermProject extends JFrame {
 		contentPane.add(btn1);
 		
 		
-		st.setSize(800, 100);
-		st.setLocation(0, 150);
-		contentPane.add(st);
-		st.add(new JScrollPane());
+		s.setLocation(0, 150);
+		contentPane.add(s);
 		
 		btn2.setSize(200, 100);
 		btn2.setLocation(800,150);
@@ -174,14 +183,15 @@ public class TermProject extends JFrame {
 				if(pos > 0) {
 					fname = fname.substring(0, pos);
 				}
-				List<String> cmds = Arrays.asList("cmd.exe", "/c java", path + " "+ fname);
+				List<String> cmds = Arrays.asList("java", path + " "+ fname);
 				try {
+					String s;
 					Process rProcess = new ProcessBuilder(cmds).start();
 					BufferedReader stdOut = new BufferedReader(new InputStreamReader(rProcess.getInputStream()));
 					BufferedReader stdError = new BufferedReader(new InputStreamReader(rProcess.getErrorStream()));
 					st.append(FileName + " 가 실행중");
-					System.out.println("cmd.exe" + "/c java " + path +" "+ fname);
-					
+					while ((s = stdOut.readLine()) != null) er.append(s);
+		   	    	while ((s = stdError.readLine()) != null) er.append(s);
 				} catch(IOException e2) {
 					st.append("치명적 에러");
 				}
@@ -206,7 +216,7 @@ public class TermProject extends JFrame {
 	}
 	
 	public static void main(String[] args) {
-		new TermProject();
+		new TermProject1();
 	}
 
 }
