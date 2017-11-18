@@ -10,9 +10,16 @@ import java.util.Arrays;
 
 public class TermProject extends JFrame {
 	String FileName;
-	File E_file = new File("C:\\Error_File.txt");
+	File E_file = new File("C:\\Temp\\Error_File.txt");
 	File javaFile;
 	char aChar = 92;
+	
+	static int CR = 1;							// 전역변수, 1 = Disable Run function, 0 = Enable Run function
+	static int CO = 1;                          // 전역변수, 0 = Disable Compile function, 1 = Enable Compile function
+	static int CP = 1;                          // 전역변수, 1 = Disable Compile Error list function, 0 = Enable Compile Error list function
+	static int Error_count = 0;					// 누적된 에러
+	static int Start = 0;						// 에러 토큰
+	String Error_token[] = new String[1000];	// 에러 토큰들을 저장할 배열(최대 1000개)
 	
 	JButton btn1 = new JButton("Java File Upload");
 	JButton btn2 = new JButton("Compile");
@@ -20,18 +27,21 @@ public class TermProject extends JFrame {
 	JButton btn4 = new JButton("Compile Error List");
 	JButton btn5 = new JButton("Reset");
 	JButton btn6 = new JButton("Exit");
+	JButton btn7 = new JButton("Save");
 	JTextField jt = new JTextField("File Directory", 20);
 	JTextArea st = new JTextArea("Status \n");//Status 출력
 	JTextArea ja = new JTextArea("Editor" + "\n");//Editor
-	JTextArea er = new JTextArea("Error Message" + "\n");//Error 내용 출력
+	JTextArea er = new JTextArea("Error Message, Result" + "\n");//Error 내용 출력
+	JTextField sf = new JTextField("Save File Title");
 	JLabel txt = new JLabel("파일 경로를 입력하고 버튼을 클릭하세요.");
+	
 	
 	class SPanel extends JPanel{
 		SPanel(){
 			setVisible(true);
-			setSize(800,100);
+			setSize(1000,100);
 			setLayout(new BorderLayout());
-			st.setSize(800,100);
+			st.setSize(1000,100);
 			add(st,BorderLayout.CENTER);
 			add(new JScrollPane(st));
 		}
@@ -50,10 +60,12 @@ public class TermProject extends JFrame {
 	class RPanel extends JPanel{
 		RPanel(){
 			setVisible(true);
-			setSize(1000,200);
+			setSize(1000,150);
 			setLayout(new BorderLayout());
 			er.setSize(900, 150);
 			add(er,BorderLayout.CENTER);
+			JScrollPane scr = new JScrollPane();
+			
 			add(new JScrollPane(er));
 		}
 	}
@@ -78,41 +90,49 @@ public class TermProject extends JFrame {
 		jt.setLocation(0, 50);
 		contentPane.add(jt);
 		
-		btn1.setSize(200, 100);
+		btn1.setSize(200, 50);
 		btn1.setLocation(800, 50);
 		contentPane.add(btn1);
 		
 		
-		s.setLocation(0, 150);
+		sf.setSize(800,100);
+		sf.setLocation(0, 150);
+		contentPane.add(sf);
+		
+		s.setLocation(0, 250);
 		contentPane.add(s);
 		
-		btn2.setSize(200, 100);
-		btn2.setLocation(800,150);
+		btn2.setSize(200, 50);
+		btn2.setLocation(800,100);
 		contentPane.add(btn2);
 		
 		
-		e.setLocation(0, 250);
+		e.setLocation(0, 350);
 		contentPane.add(e);
 		
 		
 		btn3.setSize(250, 100);
-		btn3.setLocation(0,750);
+		btn3.setLocation(0,850);
 		contentPane.add(btn3);
 		
 		btn4.setSize(250, 100);
-		btn4.setLocation(250,750);
+		btn4.setLocation(250,850);
 		contentPane.add(btn4);
 		
 		btn5.setSize(250, 100);
-		btn5.setLocation(500,750);
+		btn5.setLocation(500,850);
 		contentPane.add(btn5);
 		
 		btn6.setSize(250, 100);
-		btn6.setLocation(750,750);
+		btn6.setLocation(750,850);
 		contentPane.add(btn6);
 		
+		btn7.setSize(200,100);
+		btn7.setLocation(800, 150);
+		contentPane.add(btn7);
 		
-		r.setLocation(0,850);
+		
+		r.setLocation(0,950);
 		contentPane.add(r);
 		
 	
@@ -133,8 +153,10 @@ public class TermProject extends JFrame {
 		
 		btn6.addActionListener(al);
 		
+		btn7.addActionListener(al);
+		
 	
-		setSize(1000,1050);
+		setSize(1000,1130);
 		setVisible(true);
 	}
 	class MyActionListener implements ActionListener{
@@ -155,6 +177,7 @@ public class TermProject extends JFrame {
 				}
 				//void UploadJ();
 			else if(b.getText().equals("Compile")) {
+				if(FileName != null) {
 				st.append("Compiled" + "\n");
 				String s = null;
 				try {
@@ -167,13 +190,42 @@ public class TermProject extends JFrame {
 						fw.write(s);
 						fw.flush();
 						fw.close();
-						st.append(FileName + " 파일이 정상적으로 컴파일 되었습니다.");
+						st.append(FileName + " 파일이 정상적으로 컴파일 되지 않았습니다.");
 					}
 					
 				} catch(IOException e1) {
 					System.out.println(e1);
 				}
+				}
+				else
+				{
+					st.append("파일이 업로드되지 않았습니다.\n");
+				}
 				//void Compile();
+			}
+			else if(b.getText().equals("Save")) {
+				String et = ja.getText();
+				String FilePath = "C:\\temp\\" +  sf.getText() + ".java";
+				File f = new File(FilePath);
+				
+				
+				if(!f.exists())
+					try {
+						System.out.println(FilePath);
+						f.createNewFile();
+						FileWriter fw = new FileWriter(f,true);
+						fw.write(et);
+						fw.flush();
+						fw.close();
+						
+					} catch (IOException q) {
+						
+						q.printStackTrace();
+					}
+				
+				else
+					st.append("파일이 이미 존재합니다.\n");
+				
 			}
 			
 			else if(b.getText().equals("Run Program")) {
@@ -190,9 +242,15 @@ public class TermProject extends JFrame {
 					Process rProcess = new ProcessBuilder(cmds).start();
 					BufferedReader stdOut = new BufferedReader(new InputStreamReader(rProcess.getInputStream()));
 					BufferedReader stdError = new BufferedReader(new InputStreamReader(rProcess.getErrorStream()));
-					st.append(FileName + " 가 실행중");
-					while ((s = stdOut.readLine()) != null) er.append(s);
-		   	    	while ((s = stdError.readLine()) != null) er.append(s);
+					st.append(FileName + " 가 실행중\n");
+					while ((s = stdOut.readLine()) != null) { 
+					er.append(s);
+					er.append("\n");
+					}
+		   	    	while ((s = stdError.readLine()) != null) {
+		   	    	er.append(s);
+		   	    	er.append("\n");
+		   	    	}
 		   	    	System.out.print(path);
 				} catch(IOException e2) {
 					st.append("치명적 에러");
@@ -203,9 +261,24 @@ public class TermProject extends JFrame {
 			    //void Run();
 			else if(b.getText().equals("Compile Error List")) {
 				
+				FileReader reader = null;
+				try {
+				reader = new FileReader("C:\\Temp\\Error_File.txt");
+				int c;
+	    		while((c = reader.read()) != -1) {
+	    			er.append(Character.toString((char)c));
+	    		}
+	    		er.append("\n");
+
+	    		reader.close();
+				}
+				catch(IOException w) {
+					System.out.println("Error!");
+				}
 			}
 			    //void Compile_E();
 			else if(b.getText().equals("Reset")) {
+				
 				E_file.delete();
 				
 			}
