@@ -184,7 +184,7 @@ public class TermProject extends JFrame {
 				if(pos > 0) {
 					fname = fname.substring(0, pos);
 				}
-				List<String> cmds = Arrays.asList("java", path +aChar+ fname);
+				List<String> cmds = Arrays.asList("cmd", "/c", "cd", path, "&&", "java", fname);
 				try {
 					String s;
 					Process rProcess = new ProcessBuilder(cmds).start();
@@ -193,6 +193,7 @@ public class TermProject extends JFrame {
 					st.append(FileName + " 가 실행중");
 					while ((s = stdOut.readLine()) != null) er.append(s);
 		   	    	while ((s = stdError.readLine()) != null) er.append(s);
+		   	    	System.out.print(path);
 				} catch(IOException e2) {
 					st.append("치명적 에러");
 				}
