@@ -145,8 +145,10 @@ public class TermProject extends JFrame {
 					FileReader fr = null;
 					FileName = jt.getText();
 					st.append(FileName + "\n");
-					fr = new FileReader(FileName);
-						
+					BufferedReader br = new BufferedReader(new FileReader(FileName));
+					ja.read(br, FileName);
+					
+					
 					} catch(IOException er){
 						System.out.println(er);
 					}
@@ -165,9 +167,8 @@ public class TermProject extends JFrame {
 						fw.write(s);
 						fw.flush();
 						fw.close();
+						st.append(FileName + " 파일이 정상적으로 컴파일 되었습니다.");
 					}
-					
-					st.append(FileName + " 파일이 정상적으로 컴파일 되었습니다.");
 					
 				} catch(IOException e1) {
 					System.out.println(e1);
@@ -183,7 +184,7 @@ public class TermProject extends JFrame {
 				if(pos > 0) {
 					fname = fname.substring(0, pos);
 				}
-				List<String> cmds = Arrays.asList("java", path + " "+ fname);
+				List<String> cmds = Arrays.asList("java", path, "\\" + fname);
 				try {
 					String s;
 					Process rProcess = new ProcessBuilder(cmds).start();
