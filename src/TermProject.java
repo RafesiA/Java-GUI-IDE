@@ -12,6 +12,7 @@ public class TermProject extends JFrame {
 	String FileName;
 	File E_file = new File("C:\\Error_File.txt");
 	File javaFile;
+	char aChar = 92;
 	
 	JButton btn1 = new JButton("Java File Upload");
 	JButton btn2 = new JButton("Compile");
@@ -140,7 +141,6 @@ public class TermProject extends JFrame {
 		public void actionPerformed(ActionEvent e) {
 			JButton b = (JButton)e.getSource();
 			if(b.getText().equals("Java File Upload")) {
-				int i =0;
 				try {
 					FileReader fr = null;
 					FileName = jt.getText();
@@ -184,7 +184,7 @@ public class TermProject extends JFrame {
 				if(pos > 0) {
 					fname = fname.substring(0, pos);
 				}
-				List<String> cmds = Arrays.asList("java", path, "\\" + fname);
+				List<String> cmds = Arrays.asList("java", path +aChar+ fname);
 				try {
 					String s;
 					Process rProcess = new ProcessBuilder(cmds).start();
