@@ -13,7 +13,7 @@ public class TermProject extends JFrame {
 	File E_file = new File("C:\\Temp\\Error_File.txt");
 	File javaFile;
 	char aChar = 92;
-	
+	private static final String LINE_SEPARATOR = System.getProperty("line.separator");
 	static int CR = 1;							// 전역변수, 1 = Disable Run function, 0 = Enable Run function
 	static int CO = 1;                          // 전역변수, 1 = Disable Compile function, 0 = Enable Compile function
 	static int CP = 1;                          // 전역변수, 1 = Disable Compile Error list function, 0 = Enable Compile Error list function
@@ -188,8 +188,9 @@ public class TermProject extends JFrame {
 					BufferedReader stdError = new BufferedReader(new InputStreamReader
 				(oProcess.getErrorStream()));
 					while ((s = stdError.readLine()) != null) {
-						FileWriter fw = new FileWriter(E_file, true);
+						BufferedWriter fw = new BufferedWriter(new FileWriter(E_file, true));
 						fw.write(s);
+						fw.write(LINE_SEPARATOR);
 						fw.flush();
 						fw.close();
 					}
@@ -273,12 +274,13 @@ public class TermProject extends JFrame {
 			else if(b.getText().equals("Compile Error List")) {
 				FileReader reader = null;
 				try {
-					reader = new FileReader("C:\\Temp\\Error_File.txt");
 					int c;
-					while((c = reader.read()) != -1) {
-						er.append(Character.toString((char)c));
-					}
+					BufferedReader br = new BufferedReader(new FileReader(E_file));
+					reader = new FileReader("C:\\Temp\\Error_File.txt");
+					er.read(br, E_file);
 					er.append("\n");
+					while((c = reader.read()) != -1)
+						System.out.print((char)c);
 					
 					reader.close();
 				}
@@ -288,6 +290,7 @@ public class TermProject extends JFrame {
 			}
 			    //void Compile_E();
 			else if(b.getText().equals("Reset")) {
+				E_file.delete();
 				ja.setText("Editor\n");
 				jt.setText("File Directory");
 				st.setText("Status\n");
@@ -296,7 +299,6 @@ public class TermProject extends JFrame {
 				FileName = null;
 				st.append("초기화 되었습니다");
 				ja.setText("");
-				E_file.delete();
 			}
 			    //void Reset();
 			else if(b.getText().equals("Exit")) {
