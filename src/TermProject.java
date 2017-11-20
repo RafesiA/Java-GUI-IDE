@@ -17,9 +17,7 @@ public class TermProject extends JFrame {
 	static int CR = 1;							// 전역변수, 1 = Disable Run function, 0 = Enable Run function
 	static int CO = 1;                          // 전역변수, 0 = Disable Compile function, 1 = Enable Compile function
 	static int CP = 1;                          // 전역변수, 1 = Disable Compile Error list function, 0 = Enable Compile Error list function
-	static int Error_count = 0;					// 누적된 에러
-	static int Start = 0;						// 에러 토큰
-	String Error_token[] = new String[1000];	// 에러 토큰들을 저장할 배열(최대 1000개)
+	static int errorList = 1;
 	
 	JButton btn1 = new JButton("Java File Upload");
 	JButton btn2 = new JButton("Compile");
@@ -163,19 +161,21 @@ public class TermProject extends JFrame {
 		public void actionPerformed(ActionEvent e) {
 			JButton b = (JButton)e.getSource();
 			if(b.getText().equals("Java File Upload")) {
-				try {
-					FileReader fr = null;
-					FileName = jt.getText();
-					st.append(FileName + "\n");
-					BufferedReader br = new BufferedReader(new FileReader(FileName));
-					ja.read(br, FileName);
-					CO = 0;
+					try {
+						FileReader fr = null;
+						FileName = jt.getText();
+						st.append(FileName + "\n");
+						BufferedReader br = new BufferedReader(new FileReader(FileName));
+						ja.read(br, FileName);
+						CO = 0;
 					
-					} catch(IOException er){
-						System.out.println(er);
-						CO = 1;
+						} catch(IOException er){
+							System.out.println(er);
+							CO = 1;
+						}
 					}
-				}
+				
+	
 			
 				//void UploadJ();
 			else if(b.getText().equals("Compile")) {
@@ -197,18 +197,17 @@ public class TermProject extends JFrame {
 				} catch(IOException e1) {
 					System.out.println(e1);
 				}
-				if(E_file.exists()) {
+				if(E_file.exists() == true) {
 					st.append("컴파일 에러" +"\n");
 					st.append(FileName + " 파일이 정상적으로 컴파일 되지 않았습니다." + "\n");
+					CR = 1;
 					}
 				}
+				 else if(E_file.exists() == false)
+					CR = 0;
 				else {
 					st.append("파일이 업로드되지 않았습니다.\n");
 				}
-				if(E_file.exists())
-					CR = 1;
-				 else
-					CR = 0;
 				//void Compile();
 			}
 			
@@ -228,7 +227,6 @@ public class TermProject extends JFrame {
 						fw.close();
 						
 					} catch (IOException q) {
-						
 						q.printStackTrace();
 					}
 				
@@ -292,12 +290,20 @@ public class TermProject extends JFrame {
 			}
 			    //void Compile_E();
 			else if(b.getText().equals("Reset")) {
+				ja.setText("Editor\n");
+				jt.setText("File Directory");
+				st.setText("Status\n");
+				er.setText("Error Message, Result\n");
+				sf.setText("Save File Title");
+				st.append("초기화 되었습니다");
+				ja.setText("");
 				E_file.delete();
 			}
 			    //void Reset();
-			else if(b.getText().equals("Exit"))
-				System.exit(0);
+			else if(b.getText().equals("Exit")) {
 				E_file.delete();
+				System.exit(0);
+			}
 			    		
 		}
 		
