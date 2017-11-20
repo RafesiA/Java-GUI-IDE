@@ -169,40 +169,49 @@ public class TermProject extends JFrame {
 					st.append(FileName + "\n");
 					BufferedReader br = new BufferedReader(new FileReader(FileName));
 					ja.read(br, FileName);
-					
+					CO = 0;
 					
 					} catch(IOException er){
 						System.out.println(er);
+						CO = 1;
 					}
 				}
+			
 				//void UploadJ();
 			else if(b.getText().equals("Compile")) {
-				if(FileName != null) {
+				if(FileName != null && CO == 0) {
 				st.append("Compiled" + "\n");
+				btn3.setEnabled(true);
 				String s = null;
 				try {
 					Process oProcess = new ProcessBuilder("javac", FileName).start();
 					BufferedReader stdError = new BufferedReader(new InputStreamReader
 				(oProcess.getErrorStream()));
 					while ((s = stdError.readLine()) != null) {
-						st.append("컴파일 에러");
 						FileWriter fw = new FileWriter(E_file, true);
 						fw.write(s);
 						fw.flush();
 						fw.close();
-						st.append(FileName + " 파일이 정상적으로 컴파일 되지 않았습니다.");
 					}
 					
 				} catch(IOException e1) {
 					System.out.println(e1);
 				}
+				if(E_file.exists()) {
+					st.append("컴파일 에러" +"\n");
+					st.append(FileName + " 파일이 정상적으로 컴파일 되지 않았습니다." + "\n");
+					}
 				}
-				else
-				{
+				else {
 					st.append("파일이 업로드되지 않았습니다.\n");
 				}
+				if(E_file.exists())
+					CR = 1;
+				 else
+					CR = 0;
 				//void Compile();
 			}
+			
 			else if(b.getText().equals("Save")) {
 				String et = ja.getText();
 				String FilePath = "C:\\temp\\" +  sf.getText() + ".java";
@@ -229,48 +238,53 @@ public class TermProject extends JFrame {
 			}
 			
 			else if(b.getText().equals("Run Program")) {
-				File file = new File(FileName);
-				String fname = file.getName();
-				String path = file.getParent();
-				int pos = fname.lastIndexOf(".");
-				if(pos > 0) {
-					fname = fname.substring(0, pos);
-				}
-				List<String> cmds = Arrays.asList("cmd", "/c", "cd", path, "&&", "java", fname);
-				try {
-					String s;
-					Process rProcess = new ProcessBuilder(cmds).start();
-					BufferedReader stdOut = new BufferedReader(new InputStreamReader(rProcess.getInputStream()));
-					BufferedReader stdError = new BufferedReader(new InputStreamReader(rProcess.getErrorStream()));
-					st.append(FileName + " 가 실행중\n");
-					while ((s = stdOut.readLine()) != null) { 
-					er.append(s);
-					er.append("\n");
+				if(CR == 0) {
+					File file = new File(FileName);
+					String fname = file.getName();
+					String path = file.getParent();
+					int pos = fname.lastIndexOf(".");
+					if(pos > 0) {
+						fname = fname.substring(0, pos);
 					}
-		   	    	while ((s = stdError.readLine()) != null) {
-		   	    	er.append(s);
-		   	    	er.append("\n");
-		   	    	}
-		   	    	System.out.print(path);
-				} catch(IOException e2) {
-					st.append("치명적 에러");
+					List<String> cmds = Arrays.asList("cmd", "/c", "cd", path, "&&", "java", fname);
+					try {
+						String s;
+						Process rProcess = new ProcessBuilder(cmds).start();
+						BufferedReader stdOut = new BufferedReader(new InputStreamReader(rProcess.getInputStream()));
+						BufferedReader stdError = new BufferedReader(new InputStreamReader(rProcess.getErrorStream()));
+						st.append(FileName + " 가 실행중\n");
+						while ((s = stdOut.readLine()) != null) { 
+							er.append(s);
+							er.append("\n");
+						}
+						while ((s = stdError.readLine()) != null) {
+							er.append(s);
+							er.append("\n");
+						}
+						System.out.print(path);
+					} catch(IOException e2) {
+						st.append("치명적 에러");
+					}
+					b.setVisible(true);
 				}
-				b.setVisible(true);
+			 else if(CR == 1) {
+				st.append("파일이 업로드 되지 않았거나, 컴파일이 안됨\n");
+				btn3.setEnabled(false);
+			}
 				
 			}
 			    //void Run();
 			else if(b.getText().equals("Compile Error List")) {
-				
 				FileReader reader = null;
 				try {
-				reader = new FileReader("C:\\Temp\\Error_File.txt");
-				int c;
-	    		while((c = reader.read()) != -1) {
-	    			er.append(Character.toString((char)c));
-	    		}
-	    		er.append("\n");
-
-	    		reader.close();
+					reader = new FileReader("C:\\Temp\\Error_File.txt");
+					int c;
+					while((c = reader.read()) != -1) {
+						er.append(Character.toString((char)c));
+					}
+					er.append("\n");
+					
+					reader.close();
 				}
 				catch(IOException w) {
 					System.out.println("Error!");
@@ -278,13 +292,12 @@ public class TermProject extends JFrame {
 			}
 			    //void Compile_E();
 			else if(b.getText().equals("Reset")) {
-				
 				E_file.delete();
-				
 			}
 			    //void Reset();
 			else if(b.getText().equals("Exit"))
 				System.exit(0);
+				E_file.delete();
 			    		
 		}
 		
