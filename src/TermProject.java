@@ -15,9 +15,9 @@ public class TermProject extends JFrame {
 	char aChar = 92;
 	
 	static int CR = 1;							// 전역변수, 1 = Disable Run function, 0 = Enable Run function
-	static int CO = 1;                          // 전역변수, 0 = Disable Compile function, 1 = Enable Compile function
+	static int CO = 1;                          // 전역변수, 1 = Disable Compile function, 0 = Enable Compile function
 	static int CP = 1;                          // 전역변수, 1 = Disable Compile Error list function, 0 = Enable Compile Error list function
-	static int errorList = 1;
+	static int errorList = 1;					// 전역변수, 1 = 에러 존재 && not found 0 = 컴파일 에러가 없을 시
 	
 	JButton btn1 = new JButton("Java File Upload");
 	JButton btn2 = new JButton("Compile");
@@ -204,10 +204,8 @@ public class TermProject extends JFrame {
 					}
 				}
 				 else if(E_file.exists() == false)
+					 st.append("지정된 파일을 찾을 수 없습니다.\n");
 					CR = 0;
-				else {
-					st.append("파일이 업로드되지 않았습니다.\n");
-				}
 				//void Compile();
 			}
 			
@@ -236,7 +234,7 @@ public class TermProject extends JFrame {
 			}
 			
 			else if(b.getText().equals("Run Program")) {
-				if(CR == 0) {
+				if(CR == 0 && CO == 0) {
 					File file = new File(FileName);
 					String fname = file.getName();
 					String path = file.getParent();
@@ -265,7 +263,7 @@ public class TermProject extends JFrame {
 					}
 					b.setVisible(true);
 				}
-			 else if(CR == 1) {
+			 else if(CR == 1 || CO == 1) {
 				st.append("파일이 업로드 되지 않았거나, 컴파일이 안됨\n");
 				btn3.setEnabled(false);
 			}
@@ -295,6 +293,7 @@ public class TermProject extends JFrame {
 				st.setText("Status\n");
 				er.setText("Error Message, Result\n");
 				sf.setText("Save File Title");
+				FileName = null;
 				st.append("초기화 되었습니다");
 				ja.setText("");
 				E_file.delete();
