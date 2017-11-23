@@ -169,6 +169,7 @@ public class TermProject extends JFrame {
 						CO = 0;
 					
 						} catch(IOException er){
+							String errorMessage = er
 							System.out.println(er);
 							CO = 1;
 						}
@@ -292,10 +293,12 @@ public class TermProject extends JFrame {
 					} catch(IOException w) {
 						System.out.println("Error!\n");
 					}
-				} else if(CP == 0) {
+				} else if(CP == 1 && CO == 1) {
 					st.append("컴파일이 되지 않았습니다.\n");
 				} else if(errorList == 0) {
 					st.append("해당 파일에 컴파일 오류가 없습니다\n");
+				} else if(CR == 1 ^ CP == 1 && CO == 1	) {
+					st.append("파일이 업로드되지 않았습니다.");
 				}
 			}
 			    //void Compile_E();
@@ -311,8 +314,8 @@ public class TermProject extends JFrame {
 					CR = 1;
 					CO = 1;
 					CP = 1;
-					Files.delete(E_file.toPath());
-					st.append("초기화 되었습니다");
+					Files.deleteIfExists(E_file.toPath());
+					st.append("초기화 되었습니다\n");
 					ja.setText("");
 				} catch(IOException x) {
 					System.err.println(x);
