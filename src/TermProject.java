@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
+import java.nio.file.Files;
 import java.util.*;
 import java.util.List;
 import java.util.Arrays;
@@ -11,8 +12,6 @@ import java.util.Arrays;
 public class TermProject extends JFrame {
 	String FileName;
 	File E_file = new File("C:\\Temp\\Error_File.txt");
-	File javaFile;
-	char aChar = 92;
 	private static final String LINE_SEPARATOR = System.getProperty("line.separator");
 	static int CR = 1;							// 전역변수, 1 = Disable Run function, 0 = Enable Run function
 	static int CO = 1;                          // 전역변수, 1 = Disable Compile function, 0 = Enable Compile function
@@ -174,9 +173,6 @@ public class TermProject extends JFrame {
 							CO = 1;
 						}
 					}
-				
-	
-			
 				//void UploadJ();
 			else if(b.getText().equals("Compile")) {
 				if(FileName != null && CO == 0) {
@@ -194,6 +190,7 @@ public class TermProject extends JFrame {
 						fw.flush();
 						fw.close();
 					}
+					CR = 0;
 					
 				} catch(IOException e1) {
 					System.out.println(e1);
@@ -202,11 +199,17 @@ public class TermProject extends JFrame {
 					st.append("컴파일 에러" +"\n");
 					st.append(FileName + " 파일이 정상적으로 컴파일 되지 않았습니다." + "\n");
 					CR = 1;
+					CP = 0;
+					errorList = 1;
 					}
 				}
-				 else if(E_file.exists() == false)
+				 else if(E_file.exists() == false) {
 					 st.append("지정된 파일을 찾을 수 없습니다.\n");
-					CR = 0;
+					 CR = 0;
+				 }
+					
+					
+					
 				//void Compile();
 			}
 			
@@ -250,6 +253,7 @@ public class TermProject extends JFrame {
 						BufferedReader stdOut = new BufferedReader(new InputStreamReader(rProcess.getInputStream()));
 						BufferedReader stdError = new BufferedReader(new InputStreamReader(rProcess.getErrorStream()));
 						st.append(FileName + " 가 실행중\n");
+						errorList = 0;
 						while ((s = stdOut.readLine()) != null) { 
 							er.append(s);
 							er.append("\n");
@@ -272,40 +276,52 @@ public class TermProject extends JFrame {
 			}
 			    //void Run();
 			else if(b.getText().equals("Compile Error List")) {
-				FileReader reader = null;
-				try {
-					int c;
-					BufferedReader br = new BufferedReader(new FileReader(E_file));
-					reader = new FileReader("C:\\Temp\\Error_File.txt");
-					er.read(br, E_file);
-					er.append("\n");
-					while((c = reader.read()) != -1)
-						System.out.print((char)c);
-					
-					reader.close();
-				}
-				catch(IOException w) {
-					System.out.println("Error!");
+				if(CP == 0 && errorList == 1) {
+					try {
+						FileReader reader = null;
+						int c;
+						BufferedReader br = new BufferedReader(new FileReader(E_file));
+						reader = new FileReader("C:\\Temp\\Error_File.txt");
+						er.read(br, E_file);
+						er.append("\n");
+						while((c = reader.read()) != -1) {
+							System.out.print((char)c);
+						}
+						reader.close();
+					} catch(IOException w) {
+						System.out.println("Error!");
+					}
+				} else if(CP == 0) {
+					st.append("컴파일이 되지 않았습니다.");
+				} else if(errorList == 0) {
+					st.append("해당 파일에 컴파일 오류가 없습니다");
 				}
 			}
 			    //void Compile_E();
 			else if(b.getText().equals("Reset")) {
-				E_file.delete();
-				ja.setText("Editor\n");
-				jt.setText("File Directory");
-				st.setText("Status\n");
-				er.setText("Error Message, Result\n");
-				sf.setText("Save File Title");
-				FileName = null;
-				st.append("초기화 되었습니다");
-				ja.setText("");
+				try {
+					ja.setText("Editor\n");
+					jt.setText("File Directory");
+					st.setText("Status\n");
+					er.setText("Error Message, Result\n");	
+					sf.setText("Save File Title");
+					FileName = null;
+					btn3.setEnabled(true);
+					CR = 1;
+					CO = 1;
+					CP = 1;
+					Files.delete(E_file.toPath());
+					st.append("초기화 되었습니다");
+					ja.setText("");
+				} catch(IOException x) {
+					System.err.println(x);
+				}
 			}
 			    //void Reset();
 			else if(b.getText().equals("Exit")) {
 				E_file.delete();
 				System.exit(0);
 			}
-			    		
 		}
 		
 	}
