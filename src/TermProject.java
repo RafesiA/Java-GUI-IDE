@@ -288,13 +288,14 @@ public class TermProject extends JFrame {
 							System.out.print((char)c);
 						}
 						reader.close();
+						br.close();
 					} catch(IOException w) {
-						System.out.println("Error!");
+						System.out.println("Error!\n");
 					}
 				} else if(CP == 0) {
-					st.append("컴파일이 되지 않았습니다.");
+					st.append("컴파일이 되지 않았습니다.\n");
 				} else if(errorList == 0) {
-					st.append("해당 파일에 컴파일 오류가 없습니다");
+					st.append("해당 파일에 컴파일 오류가 없습니다\n");
 				}
 			}
 			    //void Compile_E();
