@@ -178,11 +178,13 @@ public class TermProject extends JFrame {
 						BufferedReader br = new BufferedReader(new FileReader(FileName));
 						ja.read(br, FileName);
 						CO = 0;
-					
+						errorList = 1;
+						CR = 1;
 						} catch(IOException er){
 							String errorMessage = er.getMessage();
 							System.out.println(er);
 							CO = 1;
+							errorList = 1;
 						}
 					}
 				//void UploadJ();
@@ -203,6 +205,8 @@ public class TermProject extends JFrame {
 						fw.close();
 					}
 					CR = 0;
+					CP = 0;
+					errorList = 0;
 					
 				} catch(IOException e1) {
 					System.out.println(e1);
@@ -215,7 +219,7 @@ public class TermProject extends JFrame {
 					errorList = 1;
 					}
 				}
-				 else if(E_file.exists() == false) {
+				 else if(CO == 1) {
 					 st.append("지정된 파일을 찾을 수 없습니다.\n");
 					 CR = 0;
 				 }
@@ -305,11 +309,11 @@ public class TermProject extends JFrame {
 						System.out.println("Error!\n");
 					}
 				} else if(CP == 1 && CO == 1) {
-					st.append("컴파일이 되지 않았습니다.\n");
+					st.append("파일이 업로드되지 않았습니다.\n");
 				} else if(errorList == 0) {
 					st.append("해당 파일에 컴파일 오류가 없습니다\n");
-				} else if(CR == 1 ^ CP == 1 && CO == 1	) {
-					st.append("파일이 업로드되지 않았습니다.");
+				} else if(CP == 1) {
+					st.append("컴파일이 되지 않았습니다.\n");
 				}
 			}
 			    //void Compile_E();
