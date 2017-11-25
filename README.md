@@ -6,7 +6,7 @@ Java Text IDE Project의 기능을 베이스로 한 Java GUI IDE 프로젝트입
 
 ##이번 GUI 프로젝트에서 생긴 새로운 기능
 
-**Editor가 추가되었습니다.
+**Editor가 추가되었습니다.**
 > IDE를 통해서 소스코드를 불러오고, 작성된 소스코드를 사본 파일로 저장할 수 있습니다. *저장되는 경로는 C:\Temp*
 
 
