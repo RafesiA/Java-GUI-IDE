@@ -1,17 +1,17 @@
-# JAVA GUI IDE Project##
+# JAVA GUI IDE Project
 Java Text IDE Project의 기능을 베이스로 한 Java GUI IDE 프로젝트입니다.
 
 **경기대학교 컴퓨터과학과 자바프로그래밍2 TermProject - 2 과제이며, 본 프로그램에 대한 피드백은 언제나 환영합니다.**
 
 
-##이번 GUI 프로젝트에서 생긴 새로운 기능##
+##이번 GUI 프로젝트에서 생긴 새로운 기능
 
 **Editor가 추가되었습니다.**
 > IDE를 통해서 소스코드를 불러오고, 작성된 소스코드를 사본 파일로 저장할 수 있습니다. *저장되는 경로는 C:\Temp*
 
 
 
-### 사용법 ##
+### 사용법
 
 **1. Java File Upload**
 컴파일 하고자하는 Java 파일의 경로명 + 파일명을 입력합니다. 파일의 위치에 대한 제한은 없습니다.
