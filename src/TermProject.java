@@ -237,7 +237,6 @@ public class TermProject extends JFrame {
 				
 				if(!f.exists())
 					try {
-						System.out.println(FilePath);
 						f.createNewFile();
 						FileWriter fw = new FileWriter(f,true);
 						fw.write(et);
@@ -278,7 +277,6 @@ public class TermProject extends JFrame {
 							er.append(s);
 							er.append("\n");
 						}
-						System.out.print(path);
 					} catch(IOException e2) {
 						st.append("치명적 에러");
 					}
@@ -300,9 +298,6 @@ public class TermProject extends JFrame {
 						reader = new FileReader("C:\\Temp\\Error_File.txt");
 						er.read(br, E_file);
 						er.append("\n");
-						while((c = reader.read()) != -1) {
-							System.out.print((char)c);
-						}
 						reader.close();
 						br.close();
 					} catch(IOException w) {
