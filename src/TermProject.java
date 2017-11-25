@@ -237,7 +237,25 @@ public class TermProject extends JFrame {
 				File f = new File(FilePath);
 				
 				
-				if(!f.exists())
+				
+				if(sf.getText().isEmpty() == true)
+				
+					try {
+					PrintWriter pw = new PrintWriter(jt.getText());
+					pw.print("");
+					pw.close();
+					
+					FileWriter rw = new FileWriter(jt.getText(),true);
+					rw.write(et);
+					rw.flush();
+					rw.close();
+					st.append("파일 덮어쓰기 실행.\n");
+					
+					}catch(IOException w) {
+						w.printStackTrace();
+					}
+				
+				else if(!f.exists())
 					try {
 						f.createNewFile();
 						FileWriter fw = new FileWriter(f,true);
@@ -250,8 +268,7 @@ public class TermProject extends JFrame {
 					}
 				
 				else
-					st.append("파일이 이미 존재합니다.\n");
-				
+					st.append("파일이 이미 존재합니다.\n");			
 			}
 			
 			else if(b.getText().equals("Run Program")) {
