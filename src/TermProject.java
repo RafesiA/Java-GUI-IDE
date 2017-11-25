@@ -177,6 +177,8 @@ public class TermProject extends JFrame {
 						st.append(FileName + "\n");
 						BufferedReader br = new BufferedReader(new FileReader(FileName));
 						ja.read(br, FileName);
+						br.close();
+						E_file.delete();
 						CO = 0;
 						errorList = 1;
 						CR = 1;
