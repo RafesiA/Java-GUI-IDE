@@ -19,7 +19,7 @@ Java Text IDE Project의 기능을 베이스로 한 Java GUI IDE 프로젝트입
 **2. Compile**
 업로드한 파일을 컴파일합니다.
 
-**3. Run**
+**3. Run Program**
 컴파일한 파일을 실행하여 실행합니다. 만약 업로드된 파일이 없거나, 컴파일 오류가 발생 시, 이 기능은 작동하지 않습니다.
 
 **4. Reset**
@@ -29,7 +29,7 @@ Java Text IDE Project의 기능을 베이스로 한 Java GUI IDE 프로젝트입
 **5.Compile Error List**
 컴파일 오류 발생 시 출력되는 에러 내용을 출력합니다. 컴파일이 성공했을 때 아무 것도 출력되지 않습니다.
 
-**6. End**
+**6. Exit**
 IDE 프로그램을 종료하며, 동시에 출력용 임시파일을 제거합니다.
 
 **7. Save**
