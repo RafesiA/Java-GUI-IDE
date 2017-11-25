@@ -46,7 +46,7 @@ public class TermProject extends JFrame {
 	class EPanel extends JPanel{
 		EPanel(){
 			setVisible(true);
-			setSize(1000,500);
+			setSize(1000,300);
 			setLayout(new BorderLayout());
 			ja.setSize(900, 450);
 			add(ja,BorderLayout.CENTER);
@@ -87,6 +87,7 @@ public class TermProject extends JFrame {
 		jt.setLocation(0, 50);
 		contentPane.add(jt);
 		
+		btn1.setToolTipText("자바 파일을 업로드합니다.");
 		btn1.setSize(200, 50);
 		btn1.setLocation(800, 50);
 		contentPane.add(btn1);
@@ -99,6 +100,7 @@ public class TermProject extends JFrame {
 		s.setLocation(0, 250);
 		contentPane.add(s);
 		
+		btn2.setToolTipText("컴파일을 실행합니다.");
 		btn2.setSize(200, 50);
 		btn2.setLocation(800,100);
 		contentPane.add(btn2);
@@ -107,29 +109,33 @@ public class TermProject extends JFrame {
 		e.setLocation(0, 350);
 		contentPane.add(e);
 		
-		
+		btn3.setToolTipText("프로그램을 실행합니다.");
 		btn3.setSize(250, 100);
-		btn3.setLocation(0,850);
+		btn3.setLocation(0,650);
 		contentPane.add(btn3);
 		
+		btn4.setToolTipText("에러 메세지를 출력합니다.");
 		btn4.setSize(250, 100);
-		btn4.setLocation(250,850);
+		btn4.setLocation(250,650);
 		contentPane.add(btn4);
 		
+		btn5.setToolTipText("프로그램을 초기화합니다.");
 		btn5.setSize(250, 100);
-		btn5.setLocation(500,850);
+		btn5.setLocation(500,650);
 		contentPane.add(btn5);
 		
+		btn6.setToolTipText("프로그램을 종료합니다.");
 		btn6.setSize(250, 100);
-		btn6.setLocation(750,850);
+		btn6.setLocation(750,650);
 		contentPane.add(btn6);
 		
+		btn7.setToolTipText("파일을 저장합니다.");
 		btn7.setSize(200,100);
 		btn7.setLocation(800, 150);
 		contentPane.add(btn7);
 		
 		
-		r.setLocation(0,950);
+		r.setLocation(0,750);
 		contentPane.add(r);
 		
 	
@@ -153,7 +159,12 @@ public class TermProject extends JFrame {
 		btn7.addActionListener(al);
 		
 	
-		setSize(1000,1130);
+		
+		ToolTipManager m = ToolTipManager.sharedInstance();
+		m.setInitialDelay(0);
+		m.setDismissDelay(2000);
+		
+		setSize(1000,930);
 		setVisible(true);
 	}
 	class MyActionListener implements ActionListener{
@@ -169,7 +180,7 @@ public class TermProject extends JFrame {
 						CO = 0;
 					
 						} catch(IOException er){
-							String errorMessage = er
+							String errorMessage = er.getMessage();
 							System.out.println(er);
 							CO = 1;
 						}
@@ -177,7 +188,7 @@ public class TermProject extends JFrame {
 				//void UploadJ();
 			else if(b.getText().equals("Compile")) {
 				if(FileName != null && CO == 0) {
-				st.append("Compiled" + "\n");
+				st.append("컴파일 실행" + "\n");
 				btn3.setEnabled(true);
 				String s = null;
 				try {
