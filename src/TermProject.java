@@ -200,7 +200,7 @@ public class TermProject extends JFrame {
 						CR = 1;
 						} catch(IOException er){
 							String errorMessage = er.getMessage();
-							System.out.println(er);
+							st.append(er.getMessage() + "\n");
 							CO = 1;
 							errorList = 1;
 						}
@@ -278,6 +278,7 @@ public class TermProject extends JFrame {
 						fw.write(et);
 						fw.flush();
 						fw.close();
+						st.append("파일 생성.\n");
 						
 					} catch (IOException q) {
 						q.printStackTrace();
@@ -399,12 +400,12 @@ public class TermProject extends JFrame {
 					fi.close();
 					fo.close();
 				
-					st.append("저장 완료");
+					st.append("저장 완료.\n");
 				} catch(IOException errorFile) {
 					errorFile.printStackTrace();
 				}
 				} else {
-					st.append("저장할 컴파일 오류가 없습니다.");
+					st.append("저장할 컴파일 오류가 없습니다.\n");
 				}
 					
 			}
