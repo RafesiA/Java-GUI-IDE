@@ -26,6 +26,7 @@ public class TermProject extends JFrame {
 	JButton btn6 = new JButton("Exit");
 	JButton btn7 = new JButton("Save");
 	JButton btn8 = new JButton("Delete");
+	JButton btn9 = new JButton("Compile Errors");
 	JTextField jt = new JTextField("File Directory", 20);
 	JTextArea st = new JTextArea("Status \n");//Status 출력
 	JTextArea ja = new JTextArea("Editor" + "\n");//Editor
@@ -116,8 +117,8 @@ public class TermProject extends JFrame {
 		contentPane.add(btn3);
 		
 		btn4.setToolTipText("에러 메세지를 출력합니다.");
-		btn4.setSize(250, 100);
-		btn4.setLocation(250,650);
+		btn4.setSize(250, 50);
+		btn4.setLocation(250,700);
 		contentPane.add(btn4);
 		
 		btn5.setToolTipText("프로그램을 초기화합니다.");
@@ -139,6 +140,11 @@ public class TermProject extends JFrame {
 		btn8.setSize(200, 50);
 		btn8.setLocation(800, 200);
 		contentPane.add(btn8);
+		
+		btn9.setToolTipText("컴파일 에러를 저장합니다.");
+		btn9.setSize(250, 50);
+		btn9.setLocation(250, 650);
+		contentPane.add(btn9);
 		
 		
 		r.setLocation(0,750);
@@ -165,6 +171,8 @@ public class TermProject extends JFrame {
 		btn7.addActionListener(al);
 		
 		btn8.addActionListener(al);
+		
+		btn9.addActionListener(al);
 		
 	
 		
@@ -374,6 +382,9 @@ public class TermProject extends JFrame {
 					st.append("삭제할 파일이 존재하지 않습니다.\n");
 				
 			
+			}
+			else if(b.getText().equals("Compile Errors")) {
+				
 			}
 		}
 		
