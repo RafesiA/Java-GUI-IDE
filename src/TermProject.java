@@ -22,9 +22,10 @@ public class TermProject extends JFrame {
 	JButton btn2 = new JButton("Compile");
 	JButton btn3 = new JButton("Run Program");
 	JButton btn4 = new JButton("Compile Error List");
-	JButton btn5 = new JButton("Reset");
+	JButton btn5 = new JButton("Clear");
 	JButton btn6 = new JButton("Exit");
 	JButton btn7 = new JButton("Save");
+	JButton btn8 = new JButton("Delete");
 	JTextField jt = new JTextField("File Directory", 20);
 	JTextArea st = new JTextArea("Status \n");//Status 출력
 	JTextArea ja = new JTextArea("Editor" + "\n");//Editor
@@ -130,9 +131,14 @@ public class TermProject extends JFrame {
 		contentPane.add(btn6);
 		
 		btn7.setToolTipText("파일을 저장합니다.");
-		btn7.setSize(200,100);
+		btn7.setSize(200,50);
 		btn7.setLocation(800, 150);
 		contentPane.add(btn7);
+		
+		btn8.setToolTipText("파일을 삭제합니다.");
+		btn8.setSize(200, 50);
+		btn8.setLocation(800, 200);
+		contentPane.add(btn8);
 		
 		
 		r.setLocation(0,750);
@@ -157,6 +163,8 @@ public class TermProject extends JFrame {
 		btn6.addActionListener(al);
 		
 		btn7.addActionListener(al);
+		
+		btn8.addActionListener(al);
 		
 	
 		
@@ -331,7 +339,7 @@ public class TermProject extends JFrame {
 				}
 			}
 			    //void Compile_E();
-			else if(b.getText().equals("Reset")) {
+			else if(b.getText().equals("Clear")) {
 				try {
 					ja.setText("Editor\n");
 					jt.setText("File Directory");
@@ -350,12 +358,25 @@ public class TermProject extends JFrame {
 					System.err.println(x);
 				}
 			}
-			    //void Reset();
+			    //void Clear();
 			else if(b.getText().equals("Exit")) {
 				E_file.delete();
 				System.exit(0);
 			}
+			else if(b.getText().equals("Delete")) {
+				File D_file = new File(jt.getText());
+				
+				if(D_file.exists() == true) {
+				D_file.delete();
+				st.append("파일이 삭제되었습니다.\n");
+				}
+				else
+					st.append("삭제할 파일이 존재하지 않습니다.\n");
+				
+			
+			}
 		}
+		
 		
 	}
 	
