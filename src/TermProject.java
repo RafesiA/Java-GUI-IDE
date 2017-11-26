@@ -26,7 +26,7 @@ public class TermProject extends JFrame {
 	JButton btn6 = new JButton("Exit");
 	JButton btn7 = new JButton("Save");
 	JButton btn8 = new JButton("Delete");
-	JButton btn9 = new JButton("Compile Errors");
+	JButton btn9 = new JButton("Save Compile Errors");
 	JTextField jt = new JTextField("File Directory", 20);
 	JTextArea st = new JTextArea("Status \n");//Status 출력
 	JTextArea ja = new JTextArea("Editor" + "\n");//Editor
@@ -375,16 +375,38 @@ public class TermProject extends JFrame {
 				File D_file = new File(jt.getText());
 				
 				if(D_file.exists() == true) {
-				D_file.delete();
-				st.append("파일이 삭제되었습니다.\n");
+					D_file.delete();
+					st.append("파일이 삭제되었습니다.\n");
 				}
 				else
 					st.append("삭제할 파일이 존재하지 않습니다.\n");
 				
 			
 			}
-			else if(b.getText().equals("Compile Errors")) {
+			else if(b.getText().equals("Save Compile Errors")) {
+				if(E_file.exists()) {
+				File includedPath = new File(FileName);
+				String errorName = includedPath.getName();
+				String saveError = "C:\\Temp\\" + errorName + ".error";
+				int c;
+				try {
+					FileInputStream fi = new FileInputStream(E_file);
+					FileOutputStream fo = new FileOutputStream(saveError);
+					
+					while((c = fi.read()) != -1) {
+						fo.write((byte)c);
+					}
+					fi.close();
+					fo.close();
 				
+					st.append("저장 완료");
+				} catch(IOException errorFile) {
+					errorFile.printStackTrace();
+				}
+				} else {
+					st.append("저장할 컴파일 오류가 없습니다.");
+				}
+					
 			}
 		}
 		
