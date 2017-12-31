@@ -17,7 +17,7 @@ public class TermProject extends JFrame {
 	static int CO = 1;                          // 전역변수, 1 = Disable Compile function, 0 = Enable Compile function
 	static int CP = 1;                          // 전역변수, 1 = Disable Compile Error list function, 0 = Enable Compile Error list function
 	static int errorList = 1;					// 전역변수, 1 = 에러 존재 && not found 0 = 컴파일 에러가 없을 시
-	
+
 	JButton btn1 = new JButton("Java File Upload");
 	JButton btn2 = new JButton("Compile");
 	JButton btn3 = new JButton("Run Program");
@@ -33,8 +33,8 @@ public class TermProject extends JFrame {
 	JTextArea er = new JTextArea("Error Message, Result" + "\n");//Error 내용 출력
 	JTextField sf = new JTextField("Save File Title");
 	JLabel txt = new JLabel("파일 경로를 입력하고 버튼을 클릭하세요.");
-	
-	
+
+
 	class SPanel extends JPanel{
 		SPanel(){
 			setVisible(true);
@@ -55,7 +55,7 @@ public class TermProject extends JFrame {
 			add(new JScrollPane(ja));
 		}
 	}
-	
+
 	class RPanel extends JPanel{
 		RPanel(){
 			setVisible(true);
@@ -64,7 +64,7 @@ public class TermProject extends JFrame {
 			er.setSize(900, 150);
 			add(er,BorderLayout.CENTER);
 			JScrollPane scr = new JScrollPane();
-			
+
 			add(new JScrollPane(er));
 		}
 	}
@@ -80,106 +80,106 @@ public class TermProject extends JFrame {
 		contentPane.setBackground(Color.gray);
 		MyActionListener al = new MyActionListener();
 		setLayout(null);
-		
+
 		txt.setSize(1000, 50);
 		txt.setLocation(380, 0);
 		contentPane.add(txt);
-		
+
 		jt.setSize(800, 100);
 		jt.setLocation(0, 50);
 		contentPane.add(jt);
-		
+
 		btn1.setToolTipText("자바 파일을 업로드합니다.");
 		btn1.setSize(200, 50);
 		btn1.setLocation(800, 50);
 		contentPane.add(btn1);
-		
-		
+
+
 		sf.setSize(800,100);
 		sf.setLocation(0, 150);
 		contentPane.add(sf);
-		
+
 		s.setLocation(0, 250);
 		contentPane.add(s);
-		
+
 		btn2.setToolTipText("컴파일을 실행합니다.");
 		btn2.setSize(200, 50);
 		btn2.setLocation(800,100);
 		contentPane.add(btn2);
-		
-		
+
+
 		e.setLocation(0, 350);
 		contentPane.add(e);
-		
+
 		btn3.setToolTipText("프로그램을 실행합니다.");
 		btn3.setSize(250, 100);
 		btn3.setLocation(0,650);
 		contentPane.add(btn3);
-		
+
 		btn4.setToolTipText("에러 메세지를 출력합니다.");
 		btn4.setSize(250, 50);
 		btn4.setLocation(250,700);
 		contentPane.add(btn4);
-		
+
 		btn5.setToolTipText("프로그램을 초기화합니다.");
 		btn5.setSize(250, 100);
 		btn5.setLocation(500,650);
 		contentPane.add(btn5);
-		
+
 		btn6.setToolTipText("프로그램을 종료합니다.");
 		btn6.setSize(250, 100);
 		btn6.setLocation(750,650);
 		contentPane.add(btn6);
-		
+
 		btn7.setToolTipText("파일을 저장합니다.");
 		btn7.setSize(200,50);
 		btn7.setLocation(800, 150);
 		contentPane.add(btn7);
-		
+
 		btn8.setToolTipText("파일을 삭제합니다.");
 		btn8.setSize(200, 50);
 		btn8.setLocation(800, 200);
 		contentPane.add(btn8);
-		
+
 		btn9.setToolTipText("컴파일 에러를 저장합니다.");
 		btn9.setSize(250, 50);
 		btn9.setLocation(250, 650);
 		contentPane.add(btn9);
-		
-		
+
+
 		r.setLocation(0,750);
 		contentPane.add(r);
-		
-	
+
+
 		ja.setEditable(true);
 		er.setEditable(false);
 		st.setEditable(false);
-		
+
 		btn1.addActionListener(al);
-		
-		
+
+
 		btn2.addActionListener(al);
-		
+
 		btn3.addActionListener(al);
-		
+
 		btn4.addActionListener(al);
-		
+
 		btn5.addActionListener(al);
-		
+
 		btn6.addActionListener(al);
-		
+
 		btn7.addActionListener(al);
-		
+
 		btn8.addActionListener(al);
-		
+
 		btn9.addActionListener(al);
-		
-	
-		
+
+
+
 		ToolTipManager m = ToolTipManager.sharedInstance();
 		m.setInitialDelay(0);
 		m.setDismissDelay(2000);
-		
+
 		setSize(1000,930);
 		setVisible(true);
 	}
@@ -208,27 +208,27 @@ public class TermProject extends JFrame {
 				//void UploadJ();
 			else if(b.getText().equals("Compile")) {
 				if(FileName != null && CO == 0) {
-				st.append("컴파일 실행" + "\n");
-				btn3.setEnabled(true);
-				String s = null;
-				try {
-					Process oProcess = new ProcessBuilder("javac", FileName).start();
-					BufferedReader stdError = new BufferedReader(new InputStreamReader
-				(oProcess.getErrorStream()));
-					while ((s = stdError.readLine()) != null) {
-						BufferedWriter fw = new BufferedWriter(new FileWriter(E_file, true));
-						fw.write(s);
-						fw.write(LINE_SEPARATOR);
-						fw.flush();
-						fw.close();
+					st.append("컴파일 실행" + "\n");
+					btn3.setEnabled(true);
+					String s = null;
+					try {
+						Process oProcess = new ProcessBuilder("javac", FileName).start();
+						BufferedReader stdError = new BufferedReader(new InputStreamReader
+					(oProcess.getErrorStream()));
+						while ((s = stdError.readLine()) != null) {
+							BufferedWriter fw = new BufferedWriter(new FileWriter(E_file, true));
+							fw.write(s);
+							fw.write(LINE_SEPARATOR);
+							fw.flush();
+							fw.close();
+						}
+						CR = 0;
+						CP = 0;
+						errorList = 0;
+
+					} catch(IOException e1) {
+						System.out.println(e1);
 					}
-					CR = 0;
-					CP = 0;
-					errorList = 0;
-					
-				} catch(IOException e1) {
-					System.out.println(e1);
-				}
 				if(E_file.exists() == true) {
 					st.append("컴파일 에러" +"\n");
 					st.append(FileName + " 파일이 정상적으로 컴파일 되지 않았습니다." + "\n");
@@ -241,36 +241,36 @@ public class TermProject extends JFrame {
 					 st.append("지정된 파일을 찾을 수 없습니다.\n");
 					 CR = 0;
 				 }
-					
-					
-					
+
+
+
 				//void Compile();
 			}
-			
+
 			else if(b.getText().equals("Save")) {
 				String et = ja.getText();
 				String FilePath = "C:\\temp\\" +  sf.getText() + ".java";
 				File f = new File(FilePath);
-				
-				
-				
+
+
+
 				if(sf.getText().isEmpty() == true)
-				
+
 					try {
-					PrintWriter pw = new PrintWriter(jt.getText());
-					pw.print("");
-					pw.close();
-					
-					FileWriter rw = new FileWriter(jt.getText(),true);
-					rw.write(et);
-					rw.flush();
-					rw.close();
-					st.append("파일 덮어쓰기 실행.\n");
-					
-					}catch(IOException w) {
-						w.printStackTrace();
-					}
-				
+						PrintWriter pw = new PrintWriter(jt.getText());
+						pw.print("");
+						pw.close();
+
+						FileWriter rw = new FileWriter(jt.getText(),true);
+						rw.write(et);
+						rw.flush();
+						rw.close();
+						st.append("파일 덮어쓰기 실행.\n");
+
+						}catch(IOException w) {
+							w.printStackTrace();
+						}
+
 				else if(!f.exists())
 					try {
 						f.createNewFile();
@@ -279,15 +279,15 @@ public class TermProject extends JFrame {
 						fw.flush();
 						fw.close();
 						st.append("파일 생성.\n");
-						
+
 					} catch (IOException q) {
 						q.printStackTrace();
 					}
-				
+
 				else
-					st.append("파일이 이미 존재합니다.\n");			
+					st.append("파일이 이미 존재합니다.\n");
 			}
-			
+
 			else if(b.getText().equals("Run Program")) {
 				if(CR == 0 && CO == 0) {
 					File file = new File(FileName);
@@ -305,7 +305,7 @@ public class TermProject extends JFrame {
 						BufferedReader stdError = new BufferedReader(new InputStreamReader(rProcess.getErrorStream()));
 						st.append(FileName + " 가 실행중\n");
 						errorList = 0;
-						while ((s = stdOut.readLine()) != null) { 
+						while ((s = stdOut.readLine()) != null) {
 							er.append(s);
 							er.append("\n");
 						}
@@ -322,7 +322,7 @@ public class TermProject extends JFrame {
 				st.append("파일이 업로드 되지 않았거나, 컴파일이 안됨\n");
 				btn3.setEnabled(false);
 			}
-				
+
 			}
 			    //void Run();
 			else if(b.getText().equals("Compile Error List")) {
@@ -353,7 +353,7 @@ public class TermProject extends JFrame {
 					ja.setText("Editor\n");
 					jt.setText("File Directory");
 					st.setText("Status\n");
-					er.setText("Error Message, Result\n");	
+					er.setText("Error Message, Result\n");
 					sf.setText("Save File Title");
 					FileName = null;
 					btn3.setEnabled(true);
@@ -374,15 +374,15 @@ public class TermProject extends JFrame {
 			}
 			else if(b.getText().equals("Delete")) {
 				File D_file = new File(jt.getText());
-				
+
 				if(D_file.exists() == true) {
 					D_file.delete();
 					st.append("파일이 삭제되었습니다.\n");
 				}
 				else
 					st.append("삭제할 파일이 존재하지 않습니다.\n");
-				
-			
+
+
 			}
 			else if(b.getText().equals("Save Compile Errors")) {
 				if(E_file.exists()) {
@@ -393,13 +393,13 @@ public class TermProject extends JFrame {
 				try {
 					FileInputStream fi = new FileInputStream(E_file);
 					FileOutputStream fo = new FileOutputStream(saveError);
-					
+
 					while((c = fi.read()) != -1) {
 						fo.write((byte)c);
 					}
 					fi.close();
 					fo.close();
-				
+
 					st.append("저장 완료.\n");
 				} catch(IOException errorFile) {
 					errorFile.printStackTrace();
@@ -407,13 +407,13 @@ public class TermProject extends JFrame {
 				} else {
 					st.append("저장할 컴파일 오류가 없습니다.\n");
 				}
-					
+
 			}
 		}
-		
-		
+
+
 	}
-	
+
 	public static void main(String[] args) {
 		new TermProject();
 	}
